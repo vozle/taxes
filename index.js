@@ -13,10 +13,54 @@ for (let d = 0; d < 10; d++) {
   totalSalary.push(100000);
 }
 
-let totalTaxDeductions = totalSalary.map(i => x += i, x = 0).reverse()[0] * 0.2;
-function averageTaxDeducation(arr) {
-  return arr.reduce((partial_sum, a) => partial_sum + a, 0) / arr.length * 0.2;
+function taxStat(totalSalary, tax) {
+  let totalTaxDeduction = 0,
+    averageTaxDeduction = 0,
+    rate = 0.2,
+    minSalary,
+    maxSalary;
+
+  let employeePayMinTax = {
+    salary: "minSalary",
+    minSalaryTax: "minSalaryTax",
+    tax: "20%"
+  }
+
+  let employeePayMaxTax = {
+    salary: "maxSalary",
+    maxSalaryTax: "maxSalaryTax",
+    tax: "20%"
+  }
+
+  for (let salary of totalSalary) {
+    totalTaxDeduction = totalTaxDeduction + salary * rate;
+    averageTaxDeduction = Math.floor(averageTaxDeduction + salary / totalSalary.length * rate)
+
+    if (!minSalary) {
+      minSalary = salary;
+      maxSalary = salary;
+    } else {
+      if (minSalary > salary) {
+        minSalary = salary
+      }
+    }
+    if (maxSalary < salary) {
+      maxSalary = salary
+    }
+    minSalaryTax = minSalary * rate;
+    maxSalaryTax = maxSalary * rate;
+  }
+
+  return {
+    totalTaxDeduction,
+    averageTaxDeduction,
+    employeePayMinTax: {
+      minSalary, minSalaryTax, tax: "20%"
+    },
+    employeePayMaxTax: {
+      maxSalary, maxSalaryTax, tax: "20%"
+    }
+  }
 }
 
-console.log("Cуммарные налоговые отчисления со всех зарплат: " + totalTaxDeductions + " RUR");
-console.log("Cредние налоговые отчисления на человека в рублях: " + Math.floor(averageTaxDeducation(totalSalary)) + " RUR");
+console.log(taxStat(totalSalary));
